@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Accounts {
+  accountId       Int      @id @default(autoincrement()) @map("accountId")
+  userAccount     String   @unique @map("userAccount")
+  password        String   @map("password")
+  passwordCheck   String   @map("passwordCheck")
+
+  createdAt       DateTime @default(now()) @map("createdAt")
+  updatedAt       DateTime @updatedAt() @map("updatedAt")
+
+  // Accounts : Users => 1 : 1 관계 
+  user Users?
+
+  @@map("Accounts")
+}
+
+model Users {
+  userId        Int       @id @default(autoincrement()) @map("userId")
+  accountId     Int       @unique @map("accountId") // Account 테이블 참조 외래키
+  name          String    @map("name")
+  age           Int       @map("age")
+
+  createdAt     DateTime  @default(now()) @map("createdAt")
+  updatedAt     DateTime  @updatedAt() @map("updatedAt")
+
+  // Users : Characters => 1 : N 관계 
+  characters Characters[] @relation("UserCharacters")
+
+  // Accounts 테이블과 관계 설정
+  account Accounts @relation(fields: [accountId], references: [accountId], onDelete: Cascade)
+
+  @@map("Users")
+}
+
+model Characters {
+  characterId   Int      @id @default(autoincrement()) @map("characterId")
+  userId        Int      @map("userId") // Users 테이블 참조 외래키
+  name          String   @unique @map("name")  // 캐릭터 명 유일
+  health        Int      @default(500) @map("health")
+  power         Int      @default(100) @map("power")
+  money         Int      @default(10000) @map("money")
+
+  createdAt     DateTime @default(now()) @map("createdAt")
+  updatedAt     DateTime @updatedAt() @map("updatedAt")
+
+  // Users 테이블과 관계 설정
+  user Users @relation("UserCharacters", fields: [userId], references: [userId], onDelete: Cascade)
+
+  @@map("Characters")
+}
