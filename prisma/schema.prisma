@@ -17,7 +17,6 @@ model Accounts {
   accountId       Int      @id @default(autoincrement()) @map("accountId")
   userAccount     String   @unique @map("userAccount")
   password        String   @map("password")
-  passwordCheck   String   @map("passwordCheck")
 
   createdAt       DateTime @default(now()) @map("createdAt")
   updatedAt       DateTime @updatedAt() @map("updatedAt")

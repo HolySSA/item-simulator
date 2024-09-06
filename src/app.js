@@ -1,9 +1,11 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
-import expressSession from 'express-session'
+import expressSession from 'express-session';
 import expressMysqlSession from 'express-mysql-session';
-import AccountsRouter from './routes/accounts.router.js'
+import AccountsRouter from './routes/accounts.router.js';
+import LogMiddleware from './middlewares/log.middleware.js';
+import ErrorHandlingMiddleware from './middlewares/error-handling.middleware.js';
 
 // .env 파일을 읽어서 process.env에 추가
 dotenv.config();
@@ -24,6 +26,7 @@ const sessionStore = new MySQLStore({
   createDatabaseTable: true, // 세션 테이블을 자동으로 생성
 });
 
+app.use(LogMiddleware);
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -39,6 +42,7 @@ app.use(
 );
 
 app.use('/api', [AccountsRouter]);
+app.use(ErrorHandlingMiddleware); // 에러 처리 미들웨어는 항상 마지막에
 
 app.listen(PORT, () => {
   console.log(PORT, '포트로 서버가 열렸습니다!');
