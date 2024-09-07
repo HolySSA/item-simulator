@@ -23,6 +23,8 @@ model Accounts {
 
   // Accounts : Users => 1 : 1 관계 
   user Users?
+  // Accounts : Characters => 1 : N 관계 
+  characters Characters[] @relation("AccountCharacters")
 
   @@map("Accounts")
 }
@@ -36,9 +38,6 @@ model Users {
   createdAt     DateTime  @default(now()) @map("createdAt")
   updatedAt     DateTime  @updatedAt() @map("updatedAt")
 
-  // Users : Characters => 1 : N 관계 
-  characters Characters[] @relation("UserCharacters")
-
   // Accounts 테이블과 관계 설정
   account Accounts @relation(fields: [accountId], references: [accountId], onDelete: Cascade)
 
@@ -46,8 +45,8 @@ model Users {
 }
 
 model Characters {
-  characterId   Int      @id @default(autoincrement()) @map("characterId")
-  userId        Int      @map("userId") // Users 테이블 참조 외래키
+  characterId   String   @id @map("characterId")
+  accountId     Int      @map("accountId") // Accounts 테이블 참조 외래키
   name          String   @unique @map("name")  // 캐릭터 명 유일
   health        Int      @default(500) @map("health")
   power         Int      @default(100) @map("power")
@@ -57,7 +56,7 @@ model Characters {
   updatedAt     DateTime @updatedAt() @map("updatedAt")
 
   // Users 테이블과 관계 설정
-  user Users @relation("UserCharacters", fields: [userId], references: [userId], onDelete: Cascade)
+  account Accounts @relation("AccountCharacters", fields: [accountId], references: [accountId], onDelete: Cascade)
 
   @@map("Characters")
 }
