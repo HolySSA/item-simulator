@@ -60,3 +60,16 @@ model Characters {
 
   @@map("Characters")
 }
+
+model Items {
+  item_id       Int      @id @default(autoincrement()) @map("item_id")
+  item_code     Int      @unique @map("item_code")  // 아이템 코드 유일
+  item_name     String   @unique @map("item_name")  // 아이템 명 유일
+  item_stat     Json     @default("{}") @map("item_stat")
+  item_price    Int      @map("item_price")
+
+  createdAt     DateTime @default(now()) @map("createdAt")
+  updatedAt     DateTime @updatedAt() @map("updatedAt")
+
+  @@map("Items")
+}

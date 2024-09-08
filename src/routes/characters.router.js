@@ -159,10 +159,10 @@ router.get('/characters/:characterId/without-auth', async (req, res, next) => {
 
 /** 캐릭터 삭제 API **/
 router.delete('/characters/:characterId', authSignInToken, async (req, res, next) => {
-  //////////////////////////////////////////////////////
-  //////// characters/accountId-charater넘버       /////
-  //////// 예시) localhost:3020/api/characters/5-3 /////
-  /////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////
+  ///// characters/accountId-charater넘버       /////
+  ///// 예시) localhost:3020/api/characters/5-3 /////
+  //////////////////////////////////////////////////
   
   try {
     // 로그인한 사용자 정보와 요청된 캐릭터 ID를 가져옴
