@@ -190,6 +190,7 @@ router.post('/items/sell/:characterId', authSignInToken, async (req, res, next) 
 /**
  * 인벤토리 아이템 목록 조회 API
  * @route GET /inventory/:characterId
+ * @param {string} item_code - 아이템 코드 (req.params)
  * @param {string} characterId - 캐릭터 ID (경로 매개변수)
  * @returns {object} - 성공 메시지 및 아이템 목록
  */

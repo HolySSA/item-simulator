@@ -84,7 +84,6 @@ model Inventories {
   // Items 테이블과 관계 설정
   item Items @relation(fields: [item_code], references: [item_code], onDelete: Cascade)
 
-  @@unique([characterId, item_code]) // 복합 유니크 인덱스 추가
   @@map("Inventories")
 }
 
