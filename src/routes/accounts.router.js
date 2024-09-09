@@ -1,6 +1,5 @@
 import express from 'express';
 import { prisma } from '../utils/prisma/index.js';
-import { Prisma } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
@@ -10,18 +9,26 @@ dotenv.config();
 
 const router = express.Router();
 
-/** Accounts-Users 회원가입 API **/
+/**
+ * 회원 가입 API
+ * @route POST /sign-up
+ * @param {string} userId - 사용자 ID
+ * @param {string} password - 비밀번호
+ * @param {string} name - 이름
+ * @param {number} age - 나이
+ * @returns {object} - 성공 or 실패 메시지
+ */
 router.post('/sign-up', validateSignUp, async (req, res, next) => {
   try {
     // 에러 처리 미들웨어 테스트
     // throw new Error('에러 핸들링 미들웨어 테스트');
-    
-    // body 로부터 userAccount, password, name, age 전달 받기 - passwordCheck는 validateSignUp 미들웨어에서 체크
-    const { userAccount, password, name, age } = req.body;
-    
+
+    // body 로부터 userId, password, name, age 전달 받기 - passwordCheck는 validateSignUp 미들웨어에서 체크
+    const { userId, password, name, age } = req.body;
+
     // 동일한 아이디을 가진 사용자 유무 체크
     const isExistUser = await prisma.accounts.findFirst({
-      where: { userAccount },
+      where: { userId },
     });
     if (isExistUser) {
       return res.status(409).json({ message: '이미 존재하는 아이디입니다.' });
@@ -31,41 +38,25 @@ router.post('/sign-up', validateSignUp, async (req, res, next) => {
     const saltRounds = 10; // salt를 얼마나 복잡하게 만들지 결정.
     const hashedPassword = await bcrypt.hash(password, saltRounds); // bcrypt를 이용해서 암호화
 
-    // 트랜잭션 적용
-    const [account, user] = await prisma.$transaction(
-      async (tx) => {
-        const account = await tx.accounts.create({
-          data: {
-            userAccount,
-            password: hashedPassword,
-          },
-        });
-
-        const user = await tx.users.create({
-          data: {
-            accountId: account.accountId,
-            name,
-            age,
-          },
-        });
-
-        return [account, user];
+    const account = await prisma.accounts.create({
+      data: {
+        userId: userId,
+        password: hashedPassword,
+        name: name,
+        age: age,
       },
-      {
-        isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted,
-      }
-    );
+    });
 
     // 유저 정보 반환
-    const userResponse = {
-      userAccount: account.userAccount,
-      name: user.name,
-      age: user.age,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
+    const accountResponse = {
+      userId: account.userId,
+      name,
+      age,
+      createdAt: account.createdAt,
+      updatedAt: account.updatedAt,
     };
 
-    return res.status(201).json({ message: '계정 생성에 성공하셨습니다!', user: userResponse });
+    return res.status(201).json({ message: '계정 생성에 성공하셨습니다!', user: accountResponse });
   } catch (err) {
     // 에러 처리 미들웨어로 전달
     next(err);
@@ -75,13 +66,12 @@ router.post('/sign-up', validateSignUp, async (req, res, next) => {
 /** Accounts 로그인 API **/
 router.post('/sign-in', async (req, res, next) => {
   try {
-    const { userAccount, password } = req.body;
+    const { userId, password } = req.body;
 
-    const account = await prisma.accounts.findFirst({ where: { userAccount } });
+    const account = await prisma.accounts.findFirst({ where: { userId } });
 
     // 전달 받은 이메일을 토대로 해당 이메일 유무 확인.
-    if (!account)
-      return res.status(401).json({ message: '존재하지 않는 이메일입니다.' });
+    if (!account) return res.status(401).json({ message: '존재하지 않는 아이디입니다.' });
     // 전달 받은 함호화된 비밀번호를 토대로 복호화하여 비밀번호 일치 여부 확인.
     if (!(await bcrypt.compare(password, account.password)))
       return res.status(401).json({ message: '비밀번호가 일치하지 않습니다.' });
@@ -89,20 +79,15 @@ router.post('/sign-in', async (req, res, next) => {
     // JWT 생성
     const payload = {
       accountId: account.accountId,
-      userAccount: account.userAccount
+      userId: account.userId,
     };
 
     // 엑세스 토큰 생성
-    const token = jwt.sign(
-      payload,
-      process.env.JWT_SECRET_KEY,
-      { expiresIn: '1h' }
-    );
+    const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
 
     // 로그인 성공 및 엑세스 토큰 반환
-    return res.status(200).json({ message: '로그인에 성공하였습니다.' , token });
-  }
-  catch (err) {
+    return res.status(200).json({ message: '로그인에 성공하였습니다.', token });
+  } catch (err) {
     // 에러 처리 미들웨어
     next(err);
   }

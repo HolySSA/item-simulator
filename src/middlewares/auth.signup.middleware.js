@@ -1,5 +1,5 @@
-// userAccount 유효성 검사 (영어 소문자와 숫자만 허용)
-const userAccountRegex = /^[a-z0-9]+$/;
+// userId 유효성 검사 (영어 소문자와 숫자만 허용)
+const userIdRegex = /^[a-z0-9]+$/;
 
 /**
  * 회원 가입 유효성 검사
@@ -8,10 +8,10 @@ const userAccountRegex = /^[a-z0-9]+$/;
  * @param {*} next - 다음 미들웨어
  */
 const validateSignUp = (req, res, next) => {
-  const { userAccount, password, passwordCheck, name, age } = req.body;
+  const { userId, password, passwordCheck, name, age } = req.body;
 
   // userAccount 유효성 검사 (영어 소문자와 숫자만 허용)
-  if (!userAccountRegex.test(userAccount)) {
+  if (!userIdRegex.test(userId)) {
     return res.status(400).json({ message: '아이디는 영어 소문자와 숫자만 포함할 수 있습니다.' });
   }
 

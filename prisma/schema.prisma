@@ -15,33 +15,18 @@ datasource db {
 
 model Accounts {
   accountId       Int      @id @default(autoincrement()) @map("accountId")
-  userAccount     String   @unique @map("userAccount")
+  userId          String   @unique @map("userId")
   password        String   @map("password")
+  name            String   @map("name")
+  age             Int      @map("age")
 
   createdAt       DateTime @default(now()) @map("createdAt")
   updatedAt       DateTime @updatedAt() @map("updatedAt")
 
-  // Accounts : Users => 1 : 1 관계 
-  user Users?
   // Accounts : Characters => 1 : N 관계 
   characters Characters[] @relation("AccountCharacters")
 
   @@map("Accounts")
-}
-
-model Users {
-  userId        Int       @id @default(autoincrement()) @map("userId")
-  accountId     Int       @unique @map("accountId") // Account 테이블 참조 외래키
-  name          String    @map("name")
-  age           Int       @map("age")
-
-  createdAt     DateTime  @default(now()) @map("createdAt")
-  updatedAt     DateTime  @updatedAt() @map("updatedAt")
-
-  // Accounts 테이블과 관계 설정
-  account Accounts @relation(fields: [accountId], references: [accountId], onDelete: Cascade)
-
-  @@map("Users")
 }
 
 model Characters {
@@ -55,7 +40,12 @@ model Characters {
   createdAt     DateTime @default(now()) @map("createdAt")
   updatedAt     DateTime @updatedAt() @map("updatedAt")
 
-  // Users 테이블과 관계 설정
+  // Characters : Inventories => 1 : N
+  inventories Inventories[]
+  // Characters : Equipments => 1 : N
+  equipments Equipments[]
+
+  // Accounts 테이블과 관계 설정
   account Accounts @relation("AccountCharacters", fields: [accountId], references: [accountId], onDelete: Cascade)
 
   @@map("Characters")
@@ -66,10 +56,51 @@ model Items {
   item_code     Int      @unique @map("item_code")  // 아이템 코드 유일
   item_name     String   @unique @map("item_name")  // 아이템 명 유일
   item_stat     Json     @default("{}") @map("item_stat")
+  item_slot     String?  @map("item_slot") // 장착 슬롯
   item_price    Int      @map("item_price")
 
   createdAt     DateTime @default(now()) @map("createdAt")
   updatedAt     DateTime @updatedAt() @map("updatedAt")
 
+  // Items : Inventories => 1 : N
+  inventories Inventories[]
+  // Items : Equipments => 1 : N
+  equipments Equipments[]
+
   @@map("Items")
+}
+
+model Inventories {
+  inventoryId   Int        @id @default(autoincrement()) @map("inventoryId")
+  characterId   String     @map("characterId")
+  item_code     Int        @map("item_code") // 아이템 코드
+  count         Int        @default(1) @map("count")
+
+  createdAt     DateTime   @default(now()) @map("createdAt")
+  updatedAt     DateTime   @updatedAt() @map("updatedAt")
+
+  // Characters 테이블과 관계 설정
+  character Characters @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
+  // Items 테이블과 관계 설정
+  item Items @relation(fields: [item_code], references: [item_code], onDelete: Cascade)
+
+  @@unique([characterId, item_code]) // 복합 유니크 인덱스 추가
+  @@map("Inventories")
+}
+
+model Equipments {
+  equipmentId   Int        @id @default(autoincrement()) @map("equipmentId")
+  characterId   String     @map("characterId")
+  item_code     Int        @map("item_code") // 장착된 아이템 코드
+  slot          String     @map("slot") // 장착 위치
+
+  createdAt     DateTime   @default(now()) @map("createdAt")
+  updatedAt     DateTime   @updatedAt() @map("updatedAt")
+
+  // Characters 테이블과 관계 설정
+  character Characters @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
+  // Items 테이블과 관계 설정
+  item Items @relation(fields: [item_code], references: [item_code], onDelete: Cascade)
+
+  @@map("Equipments")
 }
