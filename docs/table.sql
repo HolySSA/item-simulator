@@ -1,3 +1,4 @@
+-- 테이블 생성
 CREATE TABLE `Accounts` (
     `accountId` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` VARCHAR(191) NOT NULL,
