@@ -168,7 +168,7 @@ router.get('/items/:item_code', async (req, res, next) => {
       return res.status(404).json({ errorMessage: '해당 아이템은 존재하지 않습니다.' });
     }
 
-    return res.status(200).json({ data: item });
+    return res.status(200).json({ item: item });
   } catch (err) {
     next(err);
   }
