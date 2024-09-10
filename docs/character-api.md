@@ -22,28 +22,4 @@
 | 기능    | METHOD   | API URL    |Request| Response| Response Error|
 |---------------|---------------|---------------|---------------|---------------|---------------|
 |캐릭터 생성 | POST  | api/create-character  | {<br>"name": "A1"<br>}  | {<br>"data": {<br>"characterId": "1-1",<br>"accountId": 1,<br>"name": "A1",<br>"health": 500,<br>"power": 100,<br>"money": 10000,<br>"createdAt": "2024-09-09T10:35:36.333Z",<br>"updatedAt": "2024-09-09T10:35:36.333Z"<br>}<br>}  | #400 캐릭터 명에 오류가 발생할 경우<br>{"errorMessage": "캐릭터 명을 입력해주세요."}<br>{"errorMessage": "이미 존재하는 캐릭터 명입니다."}|
-|보유 캐릭터 목록 조회 | GET  | /api/characters  | { } | {<br>
-	"characters": [<br>
-		{<br>
-			"accountId": 1,<br>
-			"characterId": "1-3",<br>
-			"name": "A3",<br>
-			"createdAt": "2024-09-09T10:35:36.333Z",<br>
-			"updatedAt": "2024-09-09T10:35:36.333Z"<br>
-		},<br>
-		{<br>
-			"accountId": 1,<br>
-			"characterId": "1-2",<br>
-			"name": "A2",<br>
-			"createdAt": "2024-09-09T10:35:32.298Z",<br>
-			"updatedAt": "2024-09-09T10:35:32.298Z"<br>
-		},<br>
-		{<br>
-			"accountId": 1,<br>
-			"characterId": "1-1",<br>
-			"name": "A1",<br>
-			"createdAt": "2024-09-09T10:35:29.198Z",<br>
-			"updatedAt": "2024-09-09T11:21:34.716Z"<br>
-		}<br>
-	]<br>
-}  | #401 ID 및 비밀번호 일치하지 않을 경우<br>{"errorMessage": "존재하지 않는 아이디입니다."}<br>{"errorMessage": "비밀번호가 일치하지 않습니다."}<br> |
+|보유 캐릭터 목록 조회 | GET  | /api/characters  | { } | {<br>"characters": [<br>{<br>"accountId": 1,<br>"characterId": "1-3",<br>"name": "A3",<br>"createdAt": "2024-09-09T10:35:36.333Z",<br>"updatedAt": "2024-09-09T10:35:36.333Z"<br>},<br>{<br>"accountId": 1,<br>"characterId": "1-2",<br>"name": "A2",<br>"createdAt": "2024-09-09T10:35:32.298Z",<br>"updatedAt": "2024-09-09T10:35:32.298Z"<br>},<br>{<br>"accountId": 1,<br>"characterId": "1-1",<br>"name": "A1",<br>"createdAt": "2024-09-09T10:35:29.198Z",<br>"updatedAt": "2024-09-09T11:21:34.716Z"<br>}<br>]<br>}  | #Authorization 오류 참고|
