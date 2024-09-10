@@ -57,7 +57,11 @@ router.post('/create-character', authSignInToken, async (req, res, next) => {
   }
 });
 
-/** 보유 캐릭터 목록 조회 API **/
+/**
+ * 보유 캐릭터 목록 조회 API
+ * @route GET /characters
+ * @returns {object} - 보유 캐릭터 목록
+ */
 router.get('/characters', authSignInToken, async (req, res, next) => {
   const { accountId } = req.account;
 
@@ -80,7 +84,7 @@ router.get('/characters', authSignInToken, async (req, res, next) => {
       },
     });
 
-    return res.status(200).json({ data: characters });
+    return res.status(200).json({ characters: characters });
   } catch (err) {
     next(err);
   }
