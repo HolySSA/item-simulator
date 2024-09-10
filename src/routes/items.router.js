@@ -53,7 +53,7 @@ router.post('/items', async (req, res, next) => {
       },
     });
 
-    return res.status(201).json({ message: '아이템 생성에 성공하였습니다.', data: newItem });
+    return res.status(201).json({ message: '아이템 생성에 성공하였습니다.', item: newItem });
   } catch (err) {
     next(err);
   }
