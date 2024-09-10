@@ -198,7 +198,7 @@ router.post('/items/equip/:characterId', authSignInToken, async (req, res, next)
  * 아이템 탈착 API
  * @route POST /items/unequip/:characterId
  * @param {string} characterId - 캐릭터 ID (경로 매개변수)
- * @param {number} item_code - 아이템 코드
+ * @param {String} slot - 장착 슬롯
  * @returns {object} - 성공 or 실패 메시지 / 캐릭터 스탯 업데이트
  */
 router.post('/items/unequip/:characterId', authSignInToken, async (req, res, next) => {
@@ -211,7 +211,7 @@ router.post('/items/unequip/:characterId', authSignInToken, async (req, res, nex
   }
 
   try {
-    const { stats } = await prisma.$transaction(
+    const unequipItem = await prisma.$transaction(
       async (tx) => {
         const account = req.account;
 
@@ -306,7 +306,7 @@ router.post('/items/unequip/:characterId', authSignInToken, async (req, res, nex
       }
     );
 
-    return res.status(200).json({ stats });
+    return res.status(200).json({ unequipItem });
   } catch (err) {
     next(err);
   }
@@ -316,10 +316,20 @@ router.post('/items/unequip/:characterId', authSignInToken, async (req, res, nex
  * 장착 아이템 목록 조회 API
  * @route GET /equipments/:characterId
  * @param {string} characterId - 캐릭터 ID (경로 매개변수)
- * @returns {object} - 성공 or 실패 메시지 / 캐릭터 스탯 업데이트
+ * @returns {object} - 성공 or 실패 메시지 / 장착 중인 아이템 목록
  */
 router.get('/equipments/:characterId', async (req, res, next) => {
   const { characterId } = req.params;
+
+  const character = await prisma.characters.findFirst({
+    where: {
+      characterId: characterId,
+    }
+  });
+  // 캐릭터가 존재하지 않을 경우 처리
+  if (!character) {
+    return res.status(404).json({ errorMessage: '해당 캐릭터는 존재하지 않습니다.' });
+  }
 
   try {
     // 장착 아이템 목록 조회
