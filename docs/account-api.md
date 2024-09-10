@@ -3,18 +3,12 @@
 ## ACCOUNT API
 
 ### 엔드포인트 (API URL)
-- `POST /api/sign-up` : 회원가입
-- `POST /api/sign-in` : 로그인
+- `POST /api/sign-up`
+- `POST /api/sign-in`
 
-### 요청
-- **POST**: `/api/items`
-  - 응답 예제
-- **POST**: `/api/items`
-  - 요청 바디
-  - 응답 예제
+### API 명세표
 
-| 헤더1    | 헤더2    | 헤더3    |
-|----------|----------|----------|
-| 데이터1  | 데이터2  | 데이터3  |
-| 데이터4  | 데이터5  | 데이터6  |
-| 데이터7  | 데이터8  | 데이터9  |
+| 기능    | METHOD   | API URL    |Request| Response| Response Error|
+|----------|----------|----------|----------|----------|----------|
+|회원 가입 | POST  | /api/sign-up  | {<br>"userId" : "b",<br>"password" : "bbbbbb",<br>"passwordCheck" : "bbbbbb",<br>"name" : "userA",<br>"age" : 30}  | 데이터2  | 데이터3  |
+|  로그인  | POST  | /api/sign-in  | 데이터4  | 데이터5  | 데이터6  |
