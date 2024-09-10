@@ -17,7 +17,7 @@ const router = express.Router();
  * @param {string} passwordCheck - 비밀번호 확인 : validateSignUp
  * @param {string} name - 이름
  * @param {number} age - 나이
- * @returns {object} - 성공 or 실패 메시지
+ * @returns {object} - 성공 or 실패 메시지 / 계정 정보(비밀번호 제외)
  */
 router.post('/sign-up', validateSignUp, async (req, res, next) => {
   try {
@@ -32,7 +32,7 @@ router.post('/sign-up', validateSignUp, async (req, res, next) => {
       where: { userId },
     });
     if (isExistUser) {
-      return res.status(409).json({ message: '이미 존재하는 아이디입니다.' });
+      return res.status(409).json({ errorMessage: '이미 존재하는 아이디입니다.' });
     }
 
     // 비밀번호 해싱
