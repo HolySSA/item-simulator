@@ -1,4 +1,3 @@
--- CreateTable
 CREATE TABLE `Accounts` (
     `accountId` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` VARCHAR(191) NOT NULL,
@@ -10,9 +9,8 @@ CREATE TABLE `Accounts` (
 
     UNIQUE INDEX `Accounts_userId_key`(`userId`),
     PRIMARY KEY (`accountId`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+)
 
--- CreateTable
 CREATE TABLE `Characters` (
     `characterId` VARCHAR(191) NOT NULL,
     `accountId` INTEGER NOT NULL,
@@ -25,9 +23,8 @@ CREATE TABLE `Characters` (
 
     UNIQUE INDEX `Characters_name_key`(`name`),
     PRIMARY KEY (`characterId`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+)
 
--- CreateTable
 CREATE TABLE `Items` (
     `item_id` INTEGER NOT NULL AUTO_INCREMENT,
     `item_code` INTEGER NOT NULL,
@@ -41,9 +38,8 @@ CREATE TABLE `Items` (
     UNIQUE INDEX `Items_item_code_key`(`item_code`),
     UNIQUE INDEX `Items_item_name_key`(`item_name`),
     PRIMARY KEY (`item_id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+)
 
--- CreateTable
 CREATE TABLE `Inventories` (
     `inventoryId` INTEGER NOT NULL AUTO_INCREMENT,
     `characterId` VARCHAR(191) NOT NULL,
@@ -52,11 +48,9 @@ CREATE TABLE `Inventories` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
-    INDEX `Inventories_characterId_item_code_idx`(`characterId`, `item_code`),
     PRIMARY KEY (`inventoryId`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+)
 
--- CreateTable
 CREATE TABLE `Equipments` (
     `equipmentId` INTEGER NOT NULL AUTO_INCREMENT,
     `characterId` VARCHAR(191) NOT NULL,
@@ -65,9 +59,8 @@ CREATE TABLE `Equipments` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
-    INDEX `Equipments_characterId_slot_idx`(`characterId`, `slot`),
     PRIMARY KEY (`equipmentId`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+)
 
 -- AddForeignKey
 ALTER TABLE `Characters` ADD CONSTRAINT `Characters_accountId_fkey` FOREIGN KEY (`accountId`) REFERENCES `Accounts`(`accountId`) ON DELETE CASCADE ON UPDATE CASCADE;
