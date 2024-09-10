@@ -174,13 +174,13 @@ router.get('/characters/:characterId/without-auth', async (req, res, next) => {
   }
 });
 
-/** 캐릭터 삭제 API **/
+/**
+ * 캐릭터 삭제 API
+ * @route DELETE /characters/:characterId
+ * @param {string} - 캐릭터 ID (문자열)
+ * @returns {object} - 성공 or 실패 메시지
+ */
 router.delete('/characters/:characterId', authSignInToken, async (req, res, next) => {
-  ///////////////////////////////////////////////////
-  ///// characters/accountId-charater넘버       /////
-  ///// 예시) localhost:3020/api/characters/5-3 /////
-  //////////////////////////////////////////////////
-  
   try {
     // 로그인한 사용자 정보와 요청된 캐릭터 ID를 가져옴
     const { accountId } = req.account;
@@ -194,12 +194,12 @@ router.delete('/characters/:characterId', authSignInToken, async (req, res, next
 
     // 캐릭터가 존재하지 않을 경우
     if (!character) {
-      return res.status(404).json({ message: '해당 캐릭터는 존재하지 않습니다.' });
+      return res.status(404).json({ errorMessage: '해당 캐릭터는 존재하지 않습니다.' });
     }
 
     // 캐릭터 accountId와 요청한 사용자의 accountId 체크
     if (character.accountId !== accountId) {
-      return res.status(403).json({ message: '해당 캐릭터를 삭제할 권리가 없습니다.' });
+      return res.status(403).json({ errorMessage: '해당 캐릭터를 삭제할 권리가 없습니다.' });
     }
 
     // 캐릭터 삭제
@@ -209,7 +209,8 @@ router.delete('/characters/:characterId', authSignInToken, async (req, res, next
       },
     });
 
-    return res.status(204).json({ message: '캐릭터가 성공적으로 삭제되었습니다.' });
+    // status(204)로 응답할 경우 반환이 안되므로 임시로 200 수정 
+    return res.status(200).json({ message: '캐릭터가 성공적으로 삭제되었습니다.' });
   } catch (err) {
     next(err);
   }
