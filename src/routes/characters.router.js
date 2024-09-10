@@ -192,7 +192,7 @@ router.delete('/characters/:characterId', authSignInToken, async (req, res, next
       },
     });
 
-    return res.status(200).json({ message: '캐릭터가 성공적으로 삭제되었습니다.' });
+    return res.status(204).json({ message: '캐릭터가 성공적으로 삭제되었습니다.' });
   } catch (err) {
     next(err);
   }
