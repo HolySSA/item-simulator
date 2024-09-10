@@ -133,7 +133,7 @@ router.get('/items', async (req, res, next) => {
 });
 
 /**
- * 아이템 상세 조회 조회 API
+ * 아이템 상세 조회 API
  * @route GET /items/:item_code
  * @param {string} item_code - 아이템 코드 (req.params)
  * @returns {object} - 성공 or 실패 메시지 / 아이템 코드, 아이템 이름, 아이템 스탯, 아이템 슬롯, 아이템 가격
