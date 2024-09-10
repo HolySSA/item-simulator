@@ -6,6 +6,7 @@
 - `POST /api/create-character`
 - `GET /api/characters`
 - `GET /api/characters/:characterId`
+- `GET /api/characters/:characterId/without-auth`
 
 ### Authorization 오류
 
@@ -24,4 +25,5 @@
 |---------------|---------------|---------------|---------------|---------------|---------------|
 |캐릭터 생성 | POST  | api/create-character  | {<br>"name": "A1"<br>}  | {<br>"data": {<br>"characterId": "1-1",<br>"accountId": 1,<br>"name": "A1",<br>"health": 500,<br>"power": 100,<br>"money": 10000,<br>"createdAt": "2024-09-09T10:35:36.333Z",<br>"updatedAt": "2024-09-09T10:35:36.333Z"<br>}<br>}  | #400 캐릭터 명에 오류가 발생할 경우<br>{"errorMessage": "캐릭터 명을 입력해주세요."}<br>{"errorMessage": "이미 존재하는 캐릭터 명입니다."}<br><br> #Authorization 오류 참고|
 |보유 캐릭터 목록 조회 | GET  | /api/characters  | { } | {<br>"characters": [<br>{<br>"accountId": 1,<br>"characterId": "1-3",<br>"name": "A3",<br>"createdAt": "2024-09-09T10:35:36.333Z",<br>"updatedAt": "2024-09-09T10:35:36.333Z"<br>},<br>{<br>"accountId": 1,<br>"characterId": "1-2",<br>"name": "A2",<br>"createdAt": "2024-09-09T10:35:32.298Z",<br>"updatedAt": "2024-09-09T10:35:32.298Z"<br>},<br>{<br>"accountId": 1,<br>"characterId": "1-1",<br>"name": "A1",<br>"createdAt": "2024-09-09T10:35:29.198Z",<br>"updatedAt": "2024-09-09T11:21:34.716Z"<br>}<br>]<br>}  | #Authorization 오류 참고|
-|캐릭터 정보 상세 조회 | GET  | /api/characters/:characterId  | { } | {<br>"character": {<br>"characterId": "1-1",<br>"accountId": 1,<br>"name": "A1",<br>"health": 922,<br>"power": 124,<br>"createdAt": "2024-09-09T10:35:29.198Z",<br>"updatedAt": "2024-09-09T11:21:34.716Z",<br>"money": 2984<br>}<br>}| #404 해당 characterId의 캐릭터가 없을 경우<br>{"errorMessage": "해당 캐릭터는 존재하지 않습니다."}<br><br>#Authorization 오류 참고|
+|캐릭터 정보 상세 조회 (로그인) | GET  | /api/characters/:characterId  | { } | {<br>"character": {<br>"characterId": "1-1",<br>"accountId": 1,<br>"name": "A1",<br>"health": 922,<br>"power": 124,<br>"createdAt": "2024-09-09T10:35:29.198Z",<br>"updatedAt": "2024-09-09T11:21:34.716Z",<br>"money": 2984<br>}<br>}<br> 만약 로그인한 계정의 캐릭터가 아닐 경우 로그인 X response 참고| #404 해당 characterId의 캐릭터가 없을 경우<br>{"errorMessage": "해당 캐릭터는 존재하지 않습니다."}<br><br>#Authorization 오류 참고|
+|캐릭터 정보 상세 조회 (로그인 X) | GET  | /api/characters/:characterId/without-auth  | { } | {<br>"character": {<br>"characterId": "1-1",<br>"accountId": 1,<br>"name": "A1",<br>"health": 922,<br>"power": 124,<br>"createdAt": "2024-09-09T10:35:29.198Z",<br>"updatedAt": "2024-09-09T11:21:34.716Z",<br>}<br>}| #404 해당 characterId의 캐릭터가 없을 경우<br>{"errorMessage": "해당 캐릭터는 존재하지 않습니다."}|
