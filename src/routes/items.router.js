@@ -72,6 +72,15 @@ router.patch('/items/:item_code', async (req, res, next) => {
   const { item_code } = req.params;
   const { item_name, item_stat, item_slot } = req.body;
 
+  const item = await prisma.items.findFirst({
+    where: {
+      item_code: +item_code,
+    }
+  });
+  if (!item) {
+    return res.status(404).json({ errorMessage: '해당 아이템은 존재하지 않습니다.' });
+  }
+
   if (!item_name && !item_stat && !item_slot) {
     return res.status(400).json({ errorMessage: '수정할 필드를 하나 이상 기입해주세요.' });
   }
@@ -99,7 +108,7 @@ router.patch('/items/:item_code', async (req, res, next) => {
       },
     });
 
-    return res.status(200).json({ message: '아이템 수정에 성공하였습니다.', data: updatedItem });
+    return res.status(200).json({ message: '아이템 수정에 성공하였습니다.', item: updatedItem });
   } catch (err) {
     next(err);
   }
