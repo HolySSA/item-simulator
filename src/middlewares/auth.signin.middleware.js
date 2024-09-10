@@ -16,7 +16,7 @@ const authSignInToken = async (req, res, next) => {
     // 헤더에서 Authorization 토큰 추출
     const { authorization } = req.headers;
     if (!authorization) {
-      return res.status(401).json({ message: 'Authorization 헤더가 제공되지 않았습니다.' });
+      return res.status(401).json({ errorMessage: 'Authorization 헤더가 제공되지 않았습니다.' });
     }
 
     // authorization은 `Bearer 토큰명` 으로 구성되어 있기 때문에 split으로 구조분해할당
@@ -47,11 +47,11 @@ const authSignInToken = async (req, res, next) => {
     next();
   } catch (err) {
     if (err.name === 'TokenExpiredError')
-      return res.status(401).json({ message: '토큰이 만료되었습니다.' });
+      return res.status(401).json({ errorMessage: '토큰이 만료되었습니다.' });
     if (err.name === 'JsonWebTokenError')
-      return res.status(401).json({ message: '토큰이 조작되었습니다.' });
+      return res.status(401).json({ errorMessage: '토큰이 조작되었습니다.' });
 
-    return res.status(400).json({ message: err.message });
+    return res.status(400).json({ errorMessage: err.message });
   }
 };
 

@@ -4,13 +4,18 @@ import authSignInToken from '../middlewares/auth.signin.middleware.js';
 
 const router = express.Router();
 
-/** 캐릭터 생성 API **/
+/**
+ * 캐릭터 생성 API
+ * @route POST /create-character
+ * @param {string} name - 캐릭터 명
+ * @returns {object} - 성공 or 실패 메시지 / 캐릭터 정보
+ */
 router.post('/create-character', authSignInToken, async (req, res, next) => {
   const { accountId } = req.account;
   // body 로부터  title, content 전달받기
   const { name } = req.body;
   if (!name) {
-    return res.status(400).json({ message: '캐릭터 명을 입력해주세요.' });
+    return res.status(400).json({ errorMessage: '캐릭터 명을 입력해주세요.' });
   }
 
   try {
@@ -19,7 +24,7 @@ router.post('/create-character', authSignInToken, async (req, res, next) => {
       where: { name },
     });
     if (isExistCharacterName) {
-      return res.status(400).json({ message: '이미 존재하는 캐릭터 명입니다.' });
+      return res.status(400).json({ errorMessage: '이미 존재하는 캐릭터 명입니다.' });
     }
 
     // 보유 캐릭터 중 최근에 만든 캐릭터 불러오기
