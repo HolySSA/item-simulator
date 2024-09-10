@@ -135,7 +135,7 @@ router.get('/items', async (req, res, next) => {
       },
     });
 
-    return res.status(200).json({ data: items });
+    return res.status(200).json({ items: items });
   } catch (err) {
     next(err);
   }
