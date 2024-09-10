@@ -3,9 +3,9 @@
 ## EQUIPMENT API
 
 ### 엔드포인트 (API URL)
-- `POST /api/items/equip/:characterId`
-- `POST /api/items/unequip/:characterId`
-- `GET /api/equipments/:characterId`
+- `POST /api/items/equip/:characterId` : 아이템 장착
+- `POST /api/items/unequip/:characterId` : 아이템 탈착
+- `GET /api/equipments/:characterId` : 장착 아이템 목록 조회
 
 ### Authorization 오류
 

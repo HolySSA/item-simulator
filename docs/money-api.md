@@ -3,7 +3,7 @@
 ## ITEM API
 
 ### 엔드포인트 (API URL)
-- `POST /api/money/earn/:characterId`
+- `POST /api/money/earn/:characterId` : 게임 머니 벌기
 
 ### Authorization 오류
 

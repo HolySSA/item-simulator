@@ -3,10 +3,10 @@
 ## ITEM API
 
 ### 엔드포인트 (API URL)
-- `POST /api/items`
-- `PATCH /api/items/:item_code`
-- `GET /api/items`
-- `GET /api/items/:item_code`
+- `POST /api/items` : 아이템 생성
+- `PATCH /api/items/:item_code` : 아이템 수정
+- `GET /api/items` : 아이템 목록 조회
+- `GET /api/items/:item_code` : 아이템 상세 조회
 
 ### API 명세표
 

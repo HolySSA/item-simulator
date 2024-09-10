@@ -3,11 +3,11 @@
 ## CHARACTER API
 
 ### 엔드포인트 (API URL)
-- `POST /api/create-character`
-- `GET /api/characters`
-- `GET /api/characters/:characterId`
-- `GET /api/characters/:characterId/without-auth`
-- `DELETE /api/characters/:characterId`
+- `POST /api/create-character` : 캐릭터 생성
+- `GET /api/characters` : 보유 캐릭터 목록 조회
+- `GET /api/characters/:characterId` : 캐릭터 정보 상세 조회(로그인)
+- `GET /api/characters/:characterId/without-auth` : 캐릭터 정보 상세 조회(로그인 X)
+- `DELETE /api/characters/:characterId` : 캐릭터 삭제
 
 ### Authorization 오류
 

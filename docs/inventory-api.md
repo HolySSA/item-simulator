@@ -3,9 +3,9 @@
 ## INVENTORY API
 
 ### 엔드포인트 (API URL)
-- `POST /api/items/buy/:characterId`
-- `POST /api/items/sell/:characterId`
-- `GET /api/inventory/:characterId`
+- `POST /api/items/buy/:characterId` : 아이템 구입
+- `POST /api/items/sell/:characterId` : 아이템 판매
+- `GET /api/inventory/:characterId` : 인벤토리 목록 조회
 
 ### Authorization 오류
 

@@ -3,8 +3,8 @@
 ## ACCOUNT API
 
 ### 엔드포인트 (API URL)
-- `POST /api/sign-up`
-- `POST /api/sign-in`
+- `POST /api/sign-up` : 회원 가입
+- `POST /api/sign-in` : 로그인
 
 ### API 명세표
 

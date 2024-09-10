@@ -62,17 +62,9 @@ CREATE TABLE `Equipments` (
     PRIMARY KEY (`equipmentId`)
 )
 
--- AddForeignKey
+-- 외래키 (조인)
 ALTER TABLE `Characters` ADD CONSTRAINT `Characters_accountId_fkey` FOREIGN KEY (`accountId`) REFERENCES `Accounts`(`accountId`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE `Inventories` ADD CONSTRAINT `Inventories_characterId_fkey` FOREIGN KEY (`characterId`) REFERENCES `Characters`(`characterId`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE `Inventories` ADD CONSTRAINT `Inventories_item_code_fkey` FOREIGN KEY (`item_code`) REFERENCES `Items`(`item_code`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE `Equipments` ADD CONSTRAINT `Equipments_characterId_fkey` FOREIGN KEY (`characterId`) REFERENCES `Characters`(`characterId`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE `Equipments` ADD CONSTRAINT `Equipments_item_code_fkey` FOREIGN KEY (`item_code`) REFERENCES `Items`(`item_code`) ON DELETE CASCADE ON UPDATE CASCADE;
