@@ -66,7 +66,7 @@ router.post('/items/equip/:characterId', authSignInToken, async (req, res, next)
 
         // 장착할 아이템과 장착 중인 아이템이 동일한 경우
         if (equippedItem && equippedItem.item_code === item_code) {
-          return res.status(400).json({ errorMessage: '해당 아이템은 이미 장착 중입니다.' });
+          return res.status(409).json({ errorMessage: '해당 아이템은 이미 장착 중입니다.' });
         }
 
         // 해당 슬롯에 장착한 아이템이 있을 경우
