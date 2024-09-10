@@ -12,6 +12,9 @@
 - [장착장비 API](docs/equipment-api.md)
 - [게임머니 API](docs/money-api.md)
 
+## 테이블
+- [TABLE 정보](docs/table.sql)
+
 ## 질의응답
 
 1. **암호화 방식**<br><br>
