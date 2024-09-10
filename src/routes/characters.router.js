@@ -90,7 +90,11 @@ router.get('/characters', authSignInToken, async (req, res, next) => {
   }
 });
 
-/** 캐릭터 상세 조회 (로그인했을 경우) API **/
+/**
+ * 캐릭터 상세 조회 API
+ * @route GET /characters/:characterId
+ * @returns {object} - (해당 계정 내 캐릭터일 경우 Money 포함) 캐릭터 정보
+ */
 router.get('/characters/:characterId', authSignInToken, async (req, res, next) => {
   try {
     const { characterId } = req.params;
@@ -119,16 +123,16 @@ router.get('/characters/:characterId', authSignInToken, async (req, res, next) =
 
     // 캐릭터가 존재하지 않을 경우 처리
     if (!character) {
-      return res.status(404).json({ message: '해당 캐릭터는 존재하지 않습니다.' });
+      return res.status(404).json({ errorMessage: '해당 캐릭터는 존재하지 않습니다.' });
     }
 
     // 자신의 캐릭터가 아닐 경우
     if (!isAuthenticated || character.accountId !== accountId) {
       const { money, ...publicCharacter } = character;
-      return res.status(200).json({ data: publicCharacter });
+      return res.status(200).json({ character: publicCharacter });
     }
 
-    return res.status(200).json({ data: character });
+    return res.status(200).json({ character: character });
   } catch (err) {
     next(err);
   }
