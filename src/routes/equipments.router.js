@@ -114,6 +114,10 @@ router.post('/items/equip/:characterId', authSignInToken, async (req, res, next)
               updatedStats.health -= previousItemStats.item_stat.health;
             if (previousItemStats.item_stat.power)
               updatedStats.power -= previousItemStats.item_stat.power;
+            if (previousItemStats.item_stat.defense)
+              updatedStats.defense -= previousItemStats.item_stat.defense;
+            if (previousItemStats.item_stat.dex)
+              updatedStats.dex -= previousItemStats.item_stat.dex;
 
             // 캐릭터 스탯 업데이트
             character = await tx.characters.update({
@@ -164,8 +168,14 @@ router.post('/items/equip/:characterId', authSignInToken, async (req, res, next)
         const { item_stat } = inventoryItem.item;
         let updatedStats = { ...character };
 
-        if (item_stat.health) updatedStats.health += item_stat.health;
-        if (item_stat.power) updatedStats.power += item_stat.power;
+        if (item_stat.health)
+          updatedStats.health += item_stat.health;
+        if (item_stat.power)
+          updatedStats.power += item_stat.power;
+        if (item_stat.defense)
+          updatedStats.defense += item_stat.defense;
+        if (item_stat.dex)
+          updatedStats.dex += item_stat.dex;
 
         // 캐릭터 스탯 업데이트
         await tx.characters.update({
@@ -179,6 +189,8 @@ router.post('/items/equip/:characterId', authSignInToken, async (req, res, next)
           name: updatedStats.name,
           health: updatedStats.health,
           power: updatedStats.power,
+          defense: updatedStats.defense,
+          dex: updatedStats.dex,
         };
 
         return { message: '아이템 장착 성공', stats: filteredStats };
@@ -247,8 +259,14 @@ router.post('/items/unequip/:characterId', authSignInToken, async (req, res, nex
         const itemStats = equippedItem.item.item_stat;
         let updatedStats = { ...character };
 
-        if (itemStats.health) updatedStats.health -= itemStats.health;
-        if (itemStats.power) updatedStats.power -= itemStats.power;
+        if (itemStats.health)
+          updatedStats.health -= itemStats.health;
+        if (itemStats.power)
+          updatedStats.power -= itemStats.power;
+        if (itemStats.defense)
+          updatedStats.defense -= itemStats.defense;
+        if (itemStats.dex)
+          updatedStats.dex -= itemStats.dex;
 
         await tx.characters.update({
           where: {
@@ -297,6 +315,8 @@ router.post('/items/unequip/:characterId', authSignInToken, async (req, res, nex
           name: updatedStats.name,
           health: updatedStats.health,
           power: updatedStats.power,
+          defense: updatedStats.defense,
+          dex: updatedStats.dex,
         };
 
         return { message: '아이템 탈착 성공.', stats: filteredStats };

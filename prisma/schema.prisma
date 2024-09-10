@@ -35,6 +35,8 @@ model Characters {
   name          String   @unique @map("name")  // 캐릭터 명 유일
   health        Int      @default(500) @map("health")
   power         Int      @default(100) @map("power")
+  defense       Int      @default(100) @map("defense")
+  dex           Int      @default(100) @map("dex")
   money         Int      @default(10000) @map("money")
 
   createdAt     DateTime @default(now()) @map("createdAt")

@@ -114,6 +114,8 @@ router.get('/characters/:characterId', authSignInToken, async (req, res, next) =
         name: true,
         health: true,
         power: true,
+        defense: true,
+        dex: true,
         createdAt: true,
         updatedAt: true,
         // money 필드 조건부로 추가 (사용자의 캐릭터일 경우 money 필드 포함한 정보)
@@ -158,6 +160,8 @@ router.get('/characters/:characterId/without-auth', async (req, res, next) => {
         name: true,
         health: true,
         power: true,
+        defense: true,
+        dex: true,
         createdAt: true,
         updatedAt: true,
         money: false,
