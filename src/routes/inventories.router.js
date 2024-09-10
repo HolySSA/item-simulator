@@ -108,7 +108,7 @@ router.post('/items/buy/:characterId', authSignInToken, async (req, res, next) =
  * @route POST /items/sell/:characterId
  * @param {string} characterId - 캐릭터 ID (경로 매개변수)
  * @param {number} item_code - 아이템 코드
- * @param {number} quantity - 판매할 수량
+ * @param {number} count - 판매할 수량
  * @returns {object} - 성공 or 실패 메시지 / 캐릭터의 현재 보유 금액
  */
 router.post('/items/sell/:characterId', authSignInToken, async (req, res, next) => {
@@ -190,9 +190,8 @@ router.post('/items/sell/:characterId', authSignInToken, async (req, res, next) 
 /**
  * 인벤토리 아이템 목록 조회 API
  * @route GET /inventory/:characterId
- * @param {string} item_code - 아이템 코드 (req.params)
  * @param {string} characterId - 캐릭터 ID (경로 매개변수)
- * @returns {object} - 성공 메시지 및 아이템 목록
+ * @returns {object} - 성공 or 실패 메시지 / 인벤토리 아이템 목록
  */
 router.get('/inventory/:characterId', authSignInToken, async (req, res, next) => {
   const { characterId } = req.params;
