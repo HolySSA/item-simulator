@@ -10,7 +10,7 @@
 - [아이템 API](docs/item-api.md)
 - [인벤토리 API](docs/inventory-api.md)
 - [장착장비 API](docs/equipment-api.md)
-- [머니 API](docs/money-api.md)
+- [게임머니 API](docs/money-api.md)
 
 ## 질의응답
 

@@ -3,12 +3,13 @@ const userIdRegex = /^[a-z0-9]+$/;
 
 /**
  * 회원 가입 유효성 검사
- * @param {*} req - 요청
- * @param {*} res - 클라
- * @param {*} next - 다음 미들웨어
+ * @param {string} userId - 아이디
+ * @param {string} password - 비밀번호
+ * @param {string} passwordCheck - 비밀번호 체크
+ * @returns {*} next - 다음 미들웨어
  */
 const validateSignUp = (req, res, next) => {
-  const { userId, password, passwordCheck, name, age } = req.body;
+  const { userId, password, passwordCheck} = req.body;
 
   // userAccount 유효성 검사 (영어 소문자와 숫자만 허용)
   if (!userIdRegex.test(userId)) {

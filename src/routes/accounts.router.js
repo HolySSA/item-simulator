@@ -14,6 +14,7 @@ const router = express.Router();
  * @route POST /sign-up
  * @param {string} userId - 사용자 ID
  * @param {string} password - 비밀번호
+ * @param {string} passwordCheck - 비밀번호 확인 : validateSignUp
  * @param {string} name - 이름
  * @param {number} age - 나이
  * @returns {object} - 성공 or 실패 메시지
@@ -63,7 +64,13 @@ router.post('/sign-up', validateSignUp, async (req, res, next) => {
   }
 });
 
-/** Accounts 로그인 API **/
+/**
+ * 로그인 API
+ * @route POST /sign-in
+ * @param {string} userId - 사용자 ID
+ * @param {string} password - 비밀번호
+ * @returns {object} - 성공 or 실패 메시지 / JWT 토큰
+ */
 router.post('/sign-in', async (req, res, next) => {
   try {
     const { userId, password } = req.body;
