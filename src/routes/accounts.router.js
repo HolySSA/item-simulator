@@ -78,10 +78,10 @@ router.post('/sign-in', async (req, res, next) => {
     const account = await prisma.accounts.findFirst({ where: { userId } });
 
     // 전달 받은 이메일을 토대로 해당 이메일 유무 확인.
-    if (!account) return res.status(401).json({ message: '존재하지 않는 아이디입니다.' });
+    if (!account) return res.status(401).json({ errorMessage: '존재하지 않는 아이디입니다.' });
     // 전달 받은 함호화된 비밀번호를 토대로 복호화하여 비밀번호 일치 여부 확인.
     if (!(await bcrypt.compare(password, account.password)))
-      return res.status(401).json({ message: '비밀번호가 일치하지 않습니다.' });
+      return res.status(401).json({ errorMessage: '비밀번호가 일치하지 않습니다.' });
 
     // JWT 생성
     const payload = {
