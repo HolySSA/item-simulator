@@ -4,6 +4,14 @@
 
 이 프로젝트는 사용자의 회원가입, 로그인을 비롯한 아이템 추가, 업데이트 등의 기능을 제공합니다.
 
+## API 명세서
+- [계정 API](docs/account-api.md)
+- [캐릭터 API](docs/character-api.md)
+- [아이템 API](docs/item-api.md)
+- [인벤토리 API](docs/inventory-api.md)
+- [장착장비 API](docs/equipment-api.md)
+- [머니 API](docs/money-api.md)
+
 ## 질의응답
 
 1. **암호화 방식**<br><br>
