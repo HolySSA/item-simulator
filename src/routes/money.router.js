@@ -24,9 +24,7 @@ router.post('/money/earn/:characterId', authSignInToken, async (req, res, next) 
       },
     });
     if (!character) {
-      return res
-        .status(403)
-        .json({ errorMessage: '본 계정에서 해당 캐릭터를 찾을 수 없습니다.' });
+      return res.status(403).json({ errorMessage: '본 계정에서 해당 캐릭터를 찾을 수 없습니다.' });
     }
 
     character = await prisma.characters.update({

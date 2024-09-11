@@ -30,9 +30,7 @@ router.post('/items/equip/:characterId', authSignInToken, async (req, res, next)
           },
         });
         if (!character) {
-          return res
-            .status(403)
-            .json({ errorMessage: '본 계정에서 해당 캐릭터를 찾을 수 없습니다.' });
+          return res.status(403).json({ errorMessage: '본 계정에서 해당 캐릭터를 찾을 수 없습니다.' });
         }
 
         // 인벤토리에서 아이템 조회
@@ -217,8 +215,8 @@ router.post('/items/unequip/:characterId', authSignInToken, async (req, res, nex
   const { characterId } = req.params;
   const { slot } = req.body;
 
-  let validateSlots = ["weapon", "clothTop", "clothBottom", "shoes", "accessories"];
-  if(!validateSlots.includes(slot)) {
+  let validateSlots = ['weapon', 'clothTop', 'clothBottom', 'shoes', 'accessories'];
+  if (!validateSlots.includes(slot)) {
     return res.status(404).json({ errorMessage: '해당 슬롯은 존재하지 않습니다.' });
   }
 
@@ -235,9 +233,7 @@ router.post('/items/unequip/:characterId', authSignInToken, async (req, res, nex
           },
         });
         if (!character) {
-          return res
-            .status(403)
-            .json({ errorMessage: '본 계정에서 해당 캐릭터를 찾을 수 없습니다.' });
+          return res.status(403).json({ errorMessage: '본 계정에서 해당 캐릭터를 찾을 수 없습니다.' });
         }
 
         // 해당 슬롯에 장착된 아이템 확인
@@ -344,7 +340,7 @@ router.get('/equipments/:characterId', async (req, res, next) => {
   const character = await prisma.characters.findFirst({
     where: {
       characterId: characterId,
-    }
+    },
   });
   // 캐릭터가 존재하지 않을 경우 처리
   if (!character) {
@@ -370,9 +366,7 @@ router.get('/equipments/:characterId', async (req, res, next) => {
       item_slot: equipmentItem.item.item_slot,
     }));
 
-    return res
-      .status(200)
-      .json({ message: '장착 중인 아이템 목록 조회 성공!', items: responseItems });
+    return res.status(200).json({ message: '장착 중인 아이템 목록 조회 성공!', items: responseItems });
   } catch (err) {
     // 오류 처리 미들웨어
     next(err);

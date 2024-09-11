@@ -31,9 +31,7 @@ router.post('/items/buy/:characterId', authSignInToken, async (req, res, next) =
           },
         });
         if (!character) {
-          return res
-            .status(403)
-            .json({ errorMessage: '본 계정에서 해당 캐릭터를 찾을 수 없습니다.' });
+          return res.status(403).json({ errorMessage: '본 계정에서 해당 캐릭터를 찾을 수 없습니다.' });
         }
 
         // 아이템 검증
@@ -129,9 +127,7 @@ router.post('/items/sell/:characterId', authSignInToken, async (req, res, next) 
           },
         });
         if (!character) {
-          return res
-            .status(403)
-            .json({ errorMessage: '본 계정에서 해당 캐릭터를 찾을 수 없습니다.' });
+          return res.status(403).json({ errorMessage: '본 계정에서 해당 캐릭터를 찾을 수 없습니다.' });
         }
 
         // 인벤토리에서 아이템 조회
@@ -226,9 +222,7 @@ router.get('/inventory/:characterId', authSignInToken, async (req, res, next) =>
       count: inventoryItem.count,
     }));
 
-    return res
-      .status(200)
-      .json({ message: '인벤토리 아이템 목록 조회 성공!', items: responseItems });
+    return res.status(200).json({ message: '인벤토리 아이템 목록 조회 성공!', items: responseItems });
   } catch (err) {
     // 오류 처리 미들웨어
     next(err);
