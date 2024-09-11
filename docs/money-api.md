@@ -3,8 +3,8 @@
 ## ITEM API
 
 ### 엔드포인트 (API URL)
-- `POST /api/money/earn/:characterId` : 게임 머니 벌기
-- `POST /api/money/gambling/:characterId` : 도박
+- `POST /api/money/earn/:characterId` : 게임 머니 벌기 (100머니 증가)
+- `POST /api/money/gambling/:characterId` : 도박 (성공 시 배팅한 돈 2배)
 
 ### Authorization 오류
 
@@ -22,4 +22,4 @@
 | 기능    | METHOD   | API URL    |Request| Response| Response Error|
 |---------------|---------------|---------------|---------------|---------------|---------------|
 |게임 머니 벌기 | POST  | /api/money/earn/:characterId  | { }| {<br>"message": "100 Money 획득 성공!",<br>"data": {<br>"name": "A1",<br>"money": 4169<br>}<br>}| #403 로그인한 계정의 캐릭터가 아닐 경우<br>{ "errorMessage": "본 계정에서 해당 캐릭터를 찾을 수 없습니다." }<br><br>#Authorization 오류 참고|
-|도박 | POST  | /api/money/gambling/:characterId  | {"betting": 50}| {<br>"message": "배팅 성공!",<br>"data": {<br>"name": "A1",<br>"money": 10100<br>}<br>}| #403 로그인한 계정의 캐릭터가 아닐 경우<br>{ "errorMessage": "본 계정에서 해당 캐릭터를 찾을 수 없습니다." }<br><br>#400 보유 금액이 적거나 형식이 맞지 않을 경우<br>{ "errorMessage": '배팅할 금액을 제대로 입력해주세요.' }<br>{ "errorMessage": '돈이 없습니다. 배팅에는 신중히 임해주세요!' }<br><br>#Authorization 오류 참고|
+|도박 | POST  | /api/money/gambling/:characterId  | {"betting": 50}| {<br>"message": "배팅 성공!",<br>"data": {<br>"name": "A1",<br>"money": 10100<br>}<br>}| #403 로그인한 계정의 캐릭터가 아닐 경우<br>{ "errorMessage": "본 계정에서 해당 캐릭터를 찾을 수 없습니다." }<br><br>#400 보유 금액이 적거나 형식이 맞지 않을 경우<br>{ "errorMessage": '배팅할 금액을 제대로 입력해주세요.' }<br>{ "errorMessage": "돈이 없습니다. 배팅에는 신중히 임해주세요!" }<br><br>#Authorization 오류 참고|

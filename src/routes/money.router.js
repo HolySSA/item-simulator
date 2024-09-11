@@ -11,7 +11,7 @@ const router = express.Router();
  * 게임 머니 벌기 API
  * @route POST /money/earn/:characterId
  * @param {string} characterId - 캐릭터 ID (경로 매개변수)
- * @returns {object} - 성공 or 실패 메시지 : 현재 캐릭터 보유 money
+ * @returns {object} - 성공 or 실패 메시지 / 현재 캐릭터 보유 money (100 증가)
  */
 router.post('/money/earn/:characterId', authSignInToken, async (req, res, next) => {
   const { characterId } = req.params;
@@ -55,7 +55,7 @@ router.post('/money/earn/:characterId', authSignInToken, async (req, res, next) 
  * @route POST /money/gambling/:characterId
  * @param {string} characterId - 캐릭터 ID (경로 매개변수)
  * @param {number} betting - 도박에 걸 돈
- * @returns {object} - 성공 or 실패 메시지 : 현재 캐릭터 보유 money
+ * @returns {object} - 성공 or 실패 메시지 / 현재 캐릭터 보유 money (성공 시 배팅한 금액 2배)
  */
 router.post('/money/gambling/:characterId', authSignInToken, async (req, res, next) => {
   const { characterId } = req.params;
