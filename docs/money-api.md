@@ -1,6 +1,6 @@
 # API 명세서
 
-## ITEM API
+## MONEY API
 
 ### 엔드포인트 (API URL)
 - `POST /api/money/earn/:characterId` : 게임 머니 벌기 (100머니 증가)
