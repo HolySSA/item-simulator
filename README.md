@@ -4,6 +4,10 @@
 
 이 프로젝트는 사용자의 회원가입, 로그인을 비롯한 아이템 추가, 업데이트 등의 기능을 제공합니다.
 
+## 서버 실행
+- yarn start : 실행
+- yarn dev : 개발 모드
+
 ## API 명세서
 - [계정 API](docs/account-api.md)
 - [캐릭터 API](docs/character-api.md)
