@@ -51,9 +51,9 @@ router.post('/create-character', authSignInToken, async (req, res, next) => {
     });
 
     res.status(201).json({ data: newCharacter });
-  } catch (error) {
+  } catch (err) {
     // 에러 처리 미들웨어
-    next();
+    next(err);
   }
 });
 

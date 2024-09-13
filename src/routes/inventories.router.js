@@ -17,6 +17,10 @@ router.post('/items/buy/:characterId', authSignInToken, async (req, res, next) =
   const { characterId } = req.params;
   const { item_code, count } = req.body;
 
+  if(count <= 0) {
+    return res.status(400).json({ errorMessage: '아이템 갯수를 한 개 이상 입력해주세요.' });
+  }
+
   try {
     const buyItem = await prisma.$transaction(
       async (tx) => {
@@ -81,7 +85,7 @@ router.post('/items/buy/:characterId', authSignInToken, async (req, res, next) =
           await tx.inventories.create({
             data: {
               characterId,
-              item_code: item.item_code,
+              item_code: +item.item_code,
               count,
             },
           });
@@ -113,6 +117,10 @@ router.post('/items/sell/:characterId', authSignInToken, async (req, res, next) 
   const { characterId } = req.params;
   const { item_code, count } = req.body;
 
+  if(count <= 0) {
+    return res.status(400).json({ errorMessage: '아이템 갯수를 한 개 이상 입력해주세요.' });
+  }
+
   try {
     const sellItem = await prisma.$transaction(
       async (tx) => {
@@ -134,7 +142,7 @@ router.post('/items/sell/:characterId', authSignInToken, async (req, res, next) 
         const inventoryItem = await tx.inventories.findFirst({
           where: {
             characterId,
-            item_code,
+            item_code: +item_code,
           },
           include: {
             item: true,
